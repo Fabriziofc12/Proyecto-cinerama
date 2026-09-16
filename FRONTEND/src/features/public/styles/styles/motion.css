@@ -1,0 +1,195 @@
+/* ══════════════════════════════════════════
+   REVEAL ANIMATIONS (scroll-triggered)
+   ══════════════════════════════════════════ */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  will-change: opacity, transform;
+}
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: none;
+  animation: reveal-scale 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+} /* Stagger for movie grid children */
+.pub-movie-grid.reveal.is-visible .pub-movie-card {
+  animation: reveal-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(1) {
+  animation-delay: 0s;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(2) {
+  animation-delay: 0.07s;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(3) {
+  animation-delay: 0.14s;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(4) {
+  animation-delay: 0.21s;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(5) {
+  animation-delay: 0.28s;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(6) {
+  animation-delay: 0.35s;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(7) {
+  animation-delay: 0.42s;
+}
+.pub-movie-grid.reveal.is-visible .pub-movie-card:nth-child(8) {
+  animation-delay: 0.49s;
+} /* ══════════════════════════════════════════
+   IMAGE SHIMMER / SKELETON
+   ══════════════════════════════════════════ */
+@keyframes pub-shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+.pub-poster-loading {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #232429 25%, #2e2f36 37%, #232429 63%);
+  background-size: 600px 100%;
+  animation: pub-shimmer 1.6s ease infinite;
+  border-radius: inherit;
+  z-index: 1;
+  transition: opacity 0.5s ease;
+}
+.pub-poster-loading.is-loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+.pub-poster-link > .pub-poster-loading {
+  display: block;
+  pointer-events: none;
+} /* Poster fade-in after load */
+.pub-poster-link img,
+.pub-poster-link .pub-image-fallback {
+  opacity: 0;
+  transition:
+    transform 0.3s,
+    opacity 0.5s ease;
+}
+.pub-poster-link img.is-loaded,
+.pub-poster-link .pub-image-fallback.is-loaded {
+  opacity: 1;
+} /* ══════════════════════════════════════════
+   MOVIE CARD HOVER (elevated)
+   ══════════════════════════════════════════ */
+.pub-movie-card {
+  min-width: 0;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pub-movie-card:hover {
+  transform: translateY(-6px);
+}
+.pub-poster-link {
+  display: block;
+  aspect-ratio: 2/3;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--pub-panel);
+  box-shadow: 0 4px 16px #0003;
+  transition: box-shadow 0.35s ease;
+}
+.pub-movie-card:hover .pub-poster-link {
+  box-shadow:
+    0 12px 40px #000a,
+    0 0 0 1px #ffffff10;
+}
+.pub-poster-link:hover img.is-loaded {
+  transform: scale(1.05);
+} /* ══════════════════════════════════════════
+   FALLBACK IMAGE (cinematic gradient)
+   ══════════════════════════════════════════ */
+.pub-image-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 20px;
+  background: linear-gradient(145deg, #4a2832, #1c1d26 60%, #191a22);
+  text-align: center;
+  color: var(--pub-gold);
+  font-size: 0.9rem;
+} /* ══════════════════════════════════════════
+   HERO RESPONSIVE (new backdrop layout)
+   ══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .pub-hero-art > img,
+  .pub-hero-art > .pub-image-fallback {
+    width: 170px;
+  }
+}
+@media (max-width: 800px) {
+  .pub-hero {
+    min-height: 75vh;
+  }
+  .pub-hero-copy {
+    padding-bottom: 45px;
+  }
+  .pub-hero-art {
+    right: 4%;
+    bottom: 60px;
+  }
+  .pub-hero-art > img,
+  .pub-hero-art > .pub-image-fallback {
+    width: 140px;
+  }
+}
+@media (max-width: 540px) {
+  .pub-hero {
+    min-height: 70vh;
+  }
+  .pub-hero h1 {
+    font-size: clamp(2rem, 8.6vw, 2.8rem);
+  }
+  .pub-hero-copy {
+    padding: 0 6% 40px;
+  }
+  .pub-hero-copy > p {
+    font-size: 0.8rem;
+  }
+  .pub-hero-art {
+    display: none;
+  }
+  .pub-carousel-controls {
+    margin-top: 20px;
+  }
+}

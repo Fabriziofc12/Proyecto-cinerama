@@ -1,0 +1,98 @@
+.pub-footer {
+  border-top: 1px solid var(--pub-line);
+  padding: 60px 5% 22px;
+  background: linear-gradient(180deg, #0d0e10 0%, #090a0c 100%);
+  position: relative;
+}
+.pub-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--pub-red),
+    var(--pub-gold),
+    var(--pub-red),
+    transparent
+  );
+  opacity: 0.4;
+}
+.pub-footer-main {
+  width: min(100%, 1240px);
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 45px;
+}
+.pub-footer-brand {
+  font-size: 1.8rem;
+  font-weight: 850;
+  letter-spacing: -0.06em;
+}
+.pub-footer-brand span {
+  color: var(--pub-red);
+  font-size: 1.1rem;
+  vertical-align: super;
+  margin-left: 3px;
+}
+.pub-footer p {
+  color: var(--pub-muted);
+  font-size: 0.84rem;
+  margin-top: 20px;
+}
+.pub-footer p strong {
+  color: var(--pub-text);
+  font-weight: 500;
+}
+.pub-footer h2 {
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  margin: 10px 0 22px;
+}
+.pub-footer-main > div > a:not(.pub-footer-brand) {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--pub-muted);
+  font-size: 0.75rem;
+  margin: 13px 0;
+  transition: color 0.2s;
+}
+.pub-footer-main > div > a:hover {
+  color: var(--pub-text);
+}
+.pub-footer-main .pub-muted {
+  font-size: 0.68rem;
+} /* Social icons */ /* Newsletter */ /* Payment badges */ /* Customer service */
+.pub-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+  font-size: 0.78rem;
+  color: var(--pub-muted);
+}
+.pub-contact-item svg {
+  color: var(--pub-gold);
+  flex-shrink: 0;
+}
+.pub-contact-item strong {
+  color: var(--pub-text);
+  font-weight: 600;
+  display: block;
+}
+.pub-footer-bottom {
+  width: min(100%, 1240px);
+  margin: 40px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid #27282c;
+  color: #a6a3a9;
+  font-size: 0.65rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}

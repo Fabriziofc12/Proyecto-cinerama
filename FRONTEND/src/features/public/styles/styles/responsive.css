@@ -1,0 +1,356 @@
+@media (min-width: 1500px) {
+  .pub-hero-copy {
+    padding-left: 70px;
+  }
+}
+@media (max-width: 1100px) {
+  .pub-nav {
+    gap: 18px;
+  }
+  .pub-quick-search {
+    flex-wrap: wrap;
+  }
+  .pub-search-title {
+    width: 100%;
+    border-right: 0;
+  }
+  .pub-search-title br {
+    display: none;
+  }
+  .pub-search-title strong {
+    margin-left: 5px;
+  }
+  .pub-movie-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .pub-booking-grid {
+    grid-template-columns: minmax(0, 1fr) 290px;
+    gap: 18px;
+  }
+  .pub-booking-main {
+    padding: 22px;
+  }
+  .pub-show-group {
+    align-items: start;
+    flex-direction: column;
+  }
+  .pub-cinema-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pub-experience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 800px) {
+  .pub-announcement {
+    font-size: 0.6rem;
+  }
+  .pub-announcement-inner {
+    gap: 40px;
+  }
+  .pub-header {
+    flex-wrap: wrap;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .pub-menu-toggle {
+    display: inline-flex !important;
+  }
+  .pub-nav {
+    display: none;
+    width: 100%;
+    padding: 10px 0;
+    align-items: stretch;
+  }
+  .pub-nav.is-open {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pub-nav a {
+    padding: 10px;
+  }
+  .pub-quick-search .pub-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    flex-basis: 100%;
+  }
+  .pub-quick-search > .pub-button {
+    width: 100%;
+  }
+  .pub-movie-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .pub-booking-grid {
+    grid-template-columns: 1fr;
+  }
+  .pub-booking-summary {
+    position: static;
+  }
+  .pub-visit-detail {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  .pub-visit-detail span {
+    font-size: 1.6rem;
+  }
+  .pub-movie-detail {
+    grid-template-columns: 180px 1fr;
+    gap: 25px;
+    padding: 23px;
+  }
+  .pub-movie-detail h1 {
+    font-size: 2rem;
+  }
+  .pub-auth-page {
+    grid-template-columns: 1fr;
+    margin: 30px auto 60px;
+  }
+  .pub-auth-story {
+    padding: 38px 28px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .pub-auth-perks {
+    display: none;
+  }
+  .pub-auth-story h1 {
+    font-size: 2rem;
+  }
+  .pub-auth-card {
+    padding: 34px 26px;
+  }
+  .pub-footer-main {
+    gap: 30px;
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+}
+@media (max-width: 540px) {
+  .pub-header {
+    padding-inline: 6%;
+  }
+  .pub-brand {
+    font-size: 1.15rem;
+  }
+  .pub-quick-search {
+    padding: 20px;
+    width: 92%;
+    gap: 17px;
+  }
+  .pub-quick-search .pub-filters {
+    gap: 15px 10px;
+  }
+  .pub-section {
+    width: 90%;
+    margin: 45px auto;
+  }
+  .pub-section-heading {
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .pub-tabs {
+    gap: 20px;
+  }
+  .pub-tabs button {
+    font-size: 0.77rem;
+  }
+  .pub-movie-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 16px;
+  }
+  .pub-movie-card h3 {
+    font-size: 0.93rem;
+  }
+  .pub-card-meta {
+    font-size: 0.61rem;
+  }
+  .pub-poster-action {
+    display: none;
+  }
+  .pub-visit-banner {
+    padding: 30px 24px;
+    grid-template-columns: 1fr;
+    margin: 45px auto;
+  }
+  .pub-visit-detail {
+    display: none;
+  }
+  .pub-catalog-filters {
+    padding: 18px;
+  }
+  .pub-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 12px;
+  }
+  .pub-filters label {
+    min-width: 0;
+  }
+  .pub-filters label:only-child {
+    grid-column: 1/-1;
+  }
+  .pub-site select,
+  .pub-site input {
+    font-size: 16px;
+  }
+  .pub-movie-detail {
+    display: flex;
+    flex-direction: column;
+    padding: 22px;
+  }
+  .pub-detail-poster {
+    width: 150px;
+    align-self: center;
+  }
+  .pub-film-facts {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .pub-functions {
+    margin-top: 40px;
+  }
+  .pub-show-group {
+    padding: 18px;
+  }
+  .pub-times {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pub-time {
+    min-width: 0;
+    padding: 10px;
+  }
+  .pub-cinema-grid {
+    grid-template-columns: 1fr;
+  }
+  .pub-cinema-detail {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: start;
+    gap: 25px;
+  }
+  .pub-cinema-program {
+    grid-template-columns: 1fr;
+  }
+  .pub-cinema-program > a {
+    display: none;
+  }
+  .pub-booking-main {
+    padding: 20px 14px;
+  }
+  .pub-booking-main h2 {
+    font-size: 1.3rem;
+  }
+  .pub-steps {
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .pub-steps li {
+    font-size: 0.66rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  .pub-seat {
+    width: 32px;
+    height: 36px;
+  }
+  .pub-seat-help {
+    display: block;
+    text-align: center;
+    color: var(--pub-gold);
+    margin-bottom: 12px !important;
+  }
+  .pub-seat-row {
+    gap: 4px;
+  }
+  .pub-seat.pub-aisle {
+    margin-left: 6px;
+  }
+  .pub-row-label {
+    width: 10px;
+  }
+  .pub-legend {
+    gap: 12px;
+    font-size: 0.6rem;
+  }
+  .pub-seat-bottom > .pub-button {
+    width: 100%;
+  }
+  .pub-payment .pub-actions > .pub-button {
+    width: 100%;
+  }
+  .pub-demo-info {
+    padding: 12px;
+  }
+  .pub-demo-info > svg {
+    display: none;
+  }
+  .pub-demo-info b {
+    overflow-wrap: anywhere;
+  }
+  .pub-ticket {
+    padding: 23px;
+  }
+  .pub-auth-card {
+    padding: 27px 22px;
+  }
+  .pub-auth-story {
+    padding: 30px 24px;
+  }
+  .pub-auth-story h1 {
+    font-size: 1.9rem;
+  }
+  .pub-order {
+    gap: 15px;
+    padding: 18px;
+  }
+  .pub-order > img,
+  .pub-order > .pub-image-fallback {
+    width: 60px;
+    height: 90px;
+  }
+  .pub-order .pub-eyebrow {
+    font-size: 0.55rem;
+  }
+  .pub-footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 20px;
+  }
+  .pub-footer-main > div:first-child {
+    grid-column: 1/-1;
+  }
+  .pub-footer-main > div:last-child {
+    grid-column: 1/-1;
+  }
+  .pub-footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pub-experience-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pub-feature-card {
+    padding: 22px 20px;
+  }
+  .pub-back-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pub-site *,
+  .pub-site *::before,
+  .pub-site *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,86 +1,58 @@
-// Catálogo de demostración para la portada; no representa disponibilidad comercial.
+import { movies as sourceMovies, branches as sourceBranches } from '../../../data/store.js';
+import { nextDays } from '../utils/format.js';
+import { movieDetails } from './movieDetails.js';
+
+// Fixtures del sitio público. Sus fechas son relativas para poder presentar la demo cualquier día.
+// Los identificadores de película y sede coinciden con los del panel administrativo.
 export const categories = { active: 'En cartelera', presale: 'Preventa', upcoming: 'Próximamente' };
-export const movies = [
-  {
-    id: 1,
-    title: 'El Mago del Kremlin',
-    poster: 'https://www.cinerama.com.pe/_admin/assets/images/peliculas/PosterMain4.jpg',
-    status: 'active',
-    rating: 'PG',
-    genre: 'Drama',
-    duration: 152,
-    format: ['2D'],
-  },
-  {
-    id: 2,
-    title: 'Exit 8',
-    poster:
-      'https://www.cinerama.com.pe/_admin/assets/images/peliculas/8_ban_deguchi-289035682-large.jpg',
-    status: 'active',
-    rating: 'PG',
-    genre: 'Terror',
-    duration: 95,
-    format: ['2D'],
-  },
-  {
-    id: 3,
-    title: 'El Diablo Viste a la Moda 2',
-    poster: 'https://www.cinerama.com.pe/_admin/assets/images/peliculas/diablos.jpg',
-    status: 'active',
-    rating: 'PG',
-    genre: 'Drama',
-    duration: 120,
-    format: ['2D'],
-  },
-  {
-    id: 4,
-    title: 'Mortal Kombat II',
-    poster: 'https://www.cinerama.com.pe/_admin/assets/images/peliculas/mortale.jpg',
-    status: 'presale',
-    rating: 'PG',
-    genre: 'Acción',
-    duration: 116,
-    format: ['2D'],
-  },
-  {
-    id: 5,
-    title: 'Michael',
-    poster:
-      'https://www.cinerama.com.pe/_admin/assets/images/peliculas/michael-335783380-large.jpg',
-    status: 'active',
-    rating: 'PG-14',
-    genre: 'Musical',
-    duration: 127,
-    format: ['2D'],
-  },
-  {
-    id: 6,
-    title: 'La Posesión de la Momia',
-    poster: 'https://www.cinerama.com.pe/_admin/assets/images/peliculas/Sin%20t%C3%ADtulo1.jpg',
-    status: 'active',
-    rating: 'PG-14',
-    genre: 'Terror',
-    duration: 135,
-    format: ['2D'],
-  },
-  {
-    id: 7,
-    title: 'Boulevard',
-    poster: 'https://www.cinerama.com.pe/_admin/assets/images/peliculas/boule.jpg',
-    status: 'upcoming',
-    rating: 'PG-14',
-    genre: 'Romance',
-    duration: 115,
-    format: ['2D'],
-  },
-  {
-    id: 8,
-    title: 'Super Mario Galaxy: La Película',
-    poster: 'https://www.cinerama.com.pe/_admin/assets/images/peliculas/unnamed.jpg',
-    status: 'upcoming',
-    rating: 'PG',
-    genre: 'Animación',
-    duration: 103,
-    format: ['3D', '2D'],
-  },
-];
+export const movies = sourceMovies.map((movie) => ({
+  ...movie,
+  ...movieDetails[movie.id],
+  trailerUrl: `https://www.youtube-nocookie.com/embed/${movieDetails[movie.id].trailerId}`,
+  status: movie.id === 4 ? 'presale' : [7, 8].includes(movie.id) ? 'upcoming' : 'active',
+}));
+export const cinemas = sourceBranches.filter((cinema) => cinema.status === 'active');
+export const dates = nextDays();
+export const shows = dates.flatMap((date, day) =>
+  movies.flatMap((movie) => {
+    if (movie.status === 'upcoming' || (movie.status === 'presale' && day < 2)) return [];
+    return cinemas.flatMap((cinema) => {
+      // Una selección distinta por sede; no todas las películas se ofrecen en todos los cines.
+      if ((movie.id + cinema.id) % 4 === 0) return [];
+      return ['15:30', '18:30', '21:30'].map((time, index) => ({
+        id: `${date}_${movie.id}_${cinema.id}_${index}`,
+        movieId: movie.id,
+        cinemaId: cinema.id,
+        date,
+        time,
+        hall: `Sala ${1 + (movie.id % cinema.halls)}`,
+        format: movie.format[index % movie.format.length],
+        language: movie.language,
+        price: 15 + ((cinema.id + index) % 3) * 3,
+        rows: 8,
+        columns: 10,
+        occupied:
+          index === 0 && movie.id === 2
+            ? Array.from(
+                { length: 80 },
+                (_, seat) => `${String.fromCharCode(65 + Math.floor(seat / 10))}${(seat % 10) + 1}`,
+              )
+            : ['B4', 'B5', 'D6', 'F7', 'F8'],
+      }));
+    });
+  }),
+);
+
+export function filterShows(filters = {}, source = shows) {
+  return source.filter((show) => {
+    const cinema = cinemas.find((item) => item.id === show.cinemaId);
+    return (
+      (!filters.movieId || show.movieId === Number(filters.movieId)) &&
+      (!filters.cinemaId || show.cinemaId === Number(filters.cinemaId)) &&
+      (!filters.city || cinema.city === filters.city) &&
+      (!filters.date || show.date === filters.date) &&
+      (!filters.format || show.format === filters.format) &&
+      (!filters.language || show.language === filters.language)
+    );
+  });
+}

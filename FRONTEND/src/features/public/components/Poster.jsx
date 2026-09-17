@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Film } from 'lucide-react';
 
-export default function Poster({ src, title, className = '' }) {
+export default function Poster({ src, title, className = '', priority = false }) {
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -21,7 +21,9 @@ export default function Poster({ src, title, className = '' }) {
         className={`${className} ${loaded ? 'is-loaded' : ''}`}
         src={src}
         alt={title}
-        loading="lazy"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : 'auto'}
+        decoding="async"
         onLoad={() => setLoaded(true)}
         onError={() => setFailed(true)}
       />

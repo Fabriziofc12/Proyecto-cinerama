@@ -1,19 +1,22 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowRight,
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  Ticket,
-  Armchair,
+  MapPin,
+  Monitor,
   Pause,
   Play,
+  Sofa,
+  Ticket,
 } from 'lucide-react';
-import { categories, movies } from '../data/catalog';
+import { categories, movies, cinemas } from '../data/catalog';
+import HeroBackdrop from '../components/HeroBackdrop';
 import MovieCard from '../components/MovieCard';
 import Poster from '../components/Poster';
-import EmptyState from '../components/EmptyState';
+import ShowFilters from '../components/ShowFilters';
 import useReveal from '../hooks/useReveal';
 import useCarousel from '../hooks/useCarousel';
 
@@ -26,13 +29,35 @@ const headlines = [
 
 const AUTOPLAY_MS = 6000;
 
+const experiences = [
+  {
+    icon: MapPin,
+    title: 'Encuentra tu cine',
+    desc: 'Explora las sedes, consulta su ubicación y elige una función.',
+  },
+  {
+    icon: Monitor,
+    title: 'Explora la cartelera',
+    desc: 'Filtra películas por sede, fecha y formato para organizar tu salida.',
+  },
+  {
+    icon: Sofa,
+    title: 'Tu lugar en la sala',
+    desc: 'Elige tus butacas y revisa el importe antes de continuar.',
+  },
+  {
+    icon: Ticket,
+    title: 'Tus reservas a mano',
+    desc: 'Consulta y descarga el comprobante de tu reserva de demostración.',
+  },
+];
+
 export default function HomePage() {
-  const { slide, fading, changeSlide, autoplay, toggleAutoplay, setInteracting } = useCarousel(
-    featured.length,
-    AUTOPLAY_MS,
-  );
+  const { slide, fading, changeSlide, autoplay, toggleAutoplay, setHovered, setFocused } =
+    useCarousel(featured.length, AUTOPLAY_MS);
   const [category, setCategory] = useState('active');
-  const [query, setQuery] = useState('');
+  const [filters, setFilters] = useState({});
+  const navigate = useNavigate();
   const movie = featured[slide];
 
   // --- Swipe touch -------------------------------------------------------
@@ -53,18 +78,16 @@ export default function HomePage() {
   const searchRef = useReveal();
   const gridRef = useReveal({ threshold: 0.08 });
   const bannerRef = useReveal();
+  const experienceRef = useReveal({ threshold: 0.08 });
 
-  const normalize = (value) =>
-    value
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase();
-  const visibleMovies = movies.filter(
-    (item) => item.status === category && normalize(item.title).includes(normalize(query.trim())),
-  );
   function search(event) {
     event.preventDefault();
-    document.getElementById('cartelera')?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    const params = new URLSearchParams(Object.entries(filters).filter(([, value]) => value));
+    navigate(
+      filters.movieId
+        ? `/web/pelicula/${filters.movieId}?${params}#funciones`
+        : `/web/peliculas?${params}`,
+    );
   }
 
   return (
@@ -73,19 +96,17 @@ export default function HomePage() {
         className="pub-hero"
         aria-roledescription="carrusel"
         aria-label="Películas destacadas"
-        onMouseEnter={() => setInteracting(true)}
-        onMouseLeave={() => setInteracting(false)}
-        onFocusCapture={() => setInteracting(true)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocusCapture={() => setFocused(true)}
         onBlurCapture={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false);
+          if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
         }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
         {/* Backdrop — full-bleed movie image */}
-        <div className={`pub-hero-backdrop ${fading ? 'is-fading' : ''}`}>
-          <img key={movie.id} src={movie.poster} alt="" aria-hidden="true" draggable="false" />
-        </div>
+        <HeroBackdrop key={movie.id} movie={movie} fading={fading} />
 
         {/* Cinematic gradient overlays */}
         <div className="pub-hero-glow" />
@@ -105,8 +126,8 @@ export default function HomePage() {
             <br />
             Haz espacio para una historia que valga la pena.
           </p>
-          <Link className="pub-button" to="/WebHome#cartelera">
-            Explorar películas <ArrowUpRight size={20} />
+          <Link className="pub-button" to={`/web/pelicula/${movie.id}#funciones`}>
+            Elegir mi función <ArrowUpRight size={20} />
           </Link>
           <div className="pub-carousel-controls">
             <button
@@ -147,11 +168,14 @@ export default function HomePage() {
         </div>
 
         {/* Floating poster accent */}
-        <div className={`pub-hero-art ${fading ? 'is-fading' : ''}`}>
-          <div className="pub-orbit" />
-          <Poster key={movie.id} src={movie.poster} title={movie.title} />
+        <Link
+          to={`/web/pelicula/${movie.id}`}
+          className={`pub-hero-art ${fading ? 'is-fading' : ''}`}
+          aria-label={`Descubrir ${movie.title}`}
+        >
+          <Poster key={movie.id} src={movie.poster} title={movie.title} priority />
           <span className="pub-art-caption">EN PANTALLA, TODO SE SIENTE MÁS.</span>
-        </div>
+        </Link>
       </section>
 
       <form className="pub-quick-search reveal" ref={searchRef} onSubmit={search}>
@@ -163,27 +187,21 @@ export default function HomePage() {
             <strong>gran historia</strong>
           </span>
         </div>
-        <label className="pub-home-search">
-          Busca una película
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Título de la película"
-          />
-        </label>
+        <ShowFilters filters={filters} onChange={setFilters} withMovie />
         <button className="pub-button" type="submit">
           Buscar <ArrowRight size={18} />
         </button>
       </form>
 
-      <section className="pub-section" id="cartelera">
+      <section className="pub-section">
         <div className="pub-section-heading">
           <div>
             <span className="pub-eyebrow">La pantalla te espera</span>
             <h2>Encuentra tu película.</h2>
           </div>
-          <span className="pub-muted">Catálogo de demostración</span>
+          <Link className="pub-text-link" to="/web/peliculas">
+            Toda la cartelera <ArrowUpRight size={17} />
+          </Link>
         </div>
         <div className="pub-tabs" aria-label="Categoría de películas">
           {Object.entries(categories).map(([key, label]) => (
@@ -199,40 +217,62 @@ export default function HomePage() {
           ))}
         </div>
         <div className="pub-movie-grid reveal" ref={gridRef}>
-          {visibleMovies.map((item) => (
-            <MovieCard key={item.id} movie={item} />
-          ))}
+          {movies
+            .filter((item) => item.status === category)
+            .map((item, index) => (
+              <MovieCard key={item.id} movie={item} index={index} />
+            ))}
         </div>
-        {!visibleMovies.length && (
-          <EmptyState title="No encontramos películas">
-            Prueba otro título o cambia de categoría.
-          </EmptyState>
-        )}
       </section>
 
-      <section className="pub-visit-banner reveal" id="experiencia" ref={bannerRef}>
+      {/* Experience / Features Section */}
+      <section className="pub-experience-section reveal" ref={experienceRef}>
+        <div className="pub-section-heading">
+          <div>
+            <span className="pub-eyebrow">La experiencia completa</span>
+            <h2>Tu cine, a otro nivel.</h2>
+          </div>
+        </div>
+        <div className="pub-experience-grid">
+          {experiences.map((exp) => (
+            <div className="pub-feature-card" key={exp.title}>
+              <div className="pub-feature-icon">
+                <exp.icon size={24} />
+              </div>
+              <h3>{exp.title}</h3>
+              <p>{exp.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="pub-visit-banner reveal" ref={bannerRef}>
         <div>
-          <span className="pub-eyebrow">Vive el cine</span>
+          <span className="pub-eyebrow">De Miraflores a Tarapoto</span>
           <h2>
             El mejor plan empieza
             <br />
             en tu cine favorito.
           </h2>
           <p>
-            Explora las historias que llegan a la pantalla y encuentra tu próxima película favorita.
+            Un plan después de clases, una salida en pareja o una película en familia. Encuentra tu
+            Cinerama y haz espacio para ese momento.
           </p>
-          <Link className="pub-button pub-secondary" to="/WebHome#cartelera">
-            <Ticket size={18} /> Explorar películas
+          <Link className="pub-button pub-secondary" to="/web/cines">
+            <MapPin size={18} /> Explorar cines
           </Link>
         </div>
-        <div className="pub-visit-detail">
-          <Armchair size={72} strokeWidth={1} />
+        <Link
+          className="pub-location-preview"
+          to={`/web/cine/${cinemas[0].id}`}
+          aria-label={`Conoce ${cinemas[0].name}`}
+        >
+          <Poster src={cinemas[0].img} title={cinemas[0].name} />
           <span>
-            Tu lugar.
-            <br />
-            <strong>Tu momento.</strong>
+            <MapPin size={18} /> {cinemas[0].name}
+            <small>{cinemas[0].city} · Ver sede y horarios</small>
           </span>
-        </div>
+        </Link>
       </section>
     </>
   );

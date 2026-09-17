@@ -4,7 +4,9 @@ export default function useCarousel(length, delay = 6000) {
   const [slide, setSlide] = useState(0);
   const [fading, setFading] = useState(false);
   const [autoplay, setAutoplay] = useState(true);
-  const [interacting, setInteracting] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const interacting = hovered || focused;
   const [reducedMotion, setReducedMotion] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
@@ -43,6 +45,7 @@ export default function useCarousel(length, delay = 6000) {
     changeSlide,
     autoplay: autoplay && !reducedMotion,
     toggleAutoplay: () => setAutoplay((value) => !value),
-    setInteracting,
+    setHovered,
+    setFocused,
   };
 }

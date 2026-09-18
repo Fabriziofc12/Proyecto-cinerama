@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = "salas") // Evita StackOverflowError en relaciones bidireccionales
+@ToString(exclude = "salas")
 public class CineEntity {
 
     @Id
@@ -36,6 +36,6 @@ public class CineEntity {
     private String urlImagen;
 
     @OneToMany(mappedBy = "cine", fetch = FetchType.LAZY)
-    @Builder.Default // Evita NullPointerException cuando se usa el builder de Lombok
+    @Builder.Default 
     private List<SalaEntity> salas = new ArrayList<>();
 }

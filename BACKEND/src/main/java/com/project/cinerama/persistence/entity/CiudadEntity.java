@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = "cines") // Evita StackOverflowError en relaciones bidireccionales
+@ToString(exclude = "cines")
 public class CiudadEntity {
 
     @Id

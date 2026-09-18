@@ -22,23 +22,13 @@ public class AsientoEntity {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    /**
-     * FK → salas.id
-     * Según RN-04, los asientos se generan automáticamente al crear la sala.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sala_id", nullable = false)
     private SalaEntity sala;
 
-    /**
-     * Fila del asiento (ej: "A", "B", "C"). varchar(5) en la BD.
-     */
     @Column(nullable = false, length = 5)
     private String fila;
 
-    /**
-     * Número de asiento dentro de la fila (ej: 1, 2, 3...).
-     */
     @Column(name = "numero_asiento", nullable = false)
     private Integer numeroAsiento;
 }

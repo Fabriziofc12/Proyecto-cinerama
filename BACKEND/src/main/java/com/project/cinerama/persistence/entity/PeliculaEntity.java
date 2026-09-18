@@ -6,14 +6,6 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Mapea la tabla "peliculas".
- *
- * DECISIÓN DE DISEÑO — Por qué Set y no List en @ManyToMany:
- * Hibernate tiene un bug conocido (HHH-1718) donde cargar múltiples
- * colecciones tipo List (bags) en la misma query genera un producto cartesiano.
- * Con Set, Hibernate emite una query separada por colección (más eficiente y correcto).
- */
 @Entity
 @Table(name = "peliculas")
 @Getter

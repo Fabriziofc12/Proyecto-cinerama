@@ -43,18 +43,10 @@ public class PeliculaEntity {
     @Column(name = "url_trailer", columnDefinition = "TEXT")
     private String urlTrailer;
 
-    /**
-     * DEFAULT false según el DDL: "es_estreno" boolean DEFAULT false
-     */
     @Column(name = "es_estreno")
     @Builder.Default
     private Boolean esEstreno = false;
 
-    // ─── Relaciones ManyToMany con las tablas pivot ───────────────────────────
-
-    /**
-     * Tabla pivot: pelicula_generos (pelicula_id, genero_id)
-     */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "pelicula_generos",
@@ -64,9 +56,6 @@ public class PeliculaEntity {
     @Builder.Default
     private Set<GeneroEntity> generos = new HashSet<>();
 
-    /**
-     * Tabla pivot: pelicula_idiomas (pelicula_id, idioma_id)
-     */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "pelicula_idiomas",
@@ -76,9 +65,6 @@ public class PeliculaEntity {
     @Builder.Default
     private Set<IdiomaEntity> idiomas = new HashSet<>();
 
-    /**
-     * Tabla pivot: pelicula_formatos (pelicula_id, formato_id)
-     */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "pelicula_formatos",

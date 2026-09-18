@@ -38,10 +38,8 @@ public class FuncionEntity {
     @JoinColumn(name = "idioma_id", nullable = false)
     private IdiomaEntity idioma;
 
-
     @Column(name = "fecha_hora_inicio", nullable = false)
     private LocalDateTime fechaHoraInicio;
-
 
     @Column(name = "precio_entrada", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioEntrada;

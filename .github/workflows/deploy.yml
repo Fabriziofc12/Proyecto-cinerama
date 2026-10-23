@@ -2,7 +2,7 @@ name: Deploy Frontend to GitHub Pages
 
 on:
   push:
-    branches: [ "develop" ] # Cambia a "main" si luego usas la rama principal
+    branches: [ "MATHEUS" ] # 👈 Cambia esto a la rama exacta que usas (ej. "develop", "main", "MATHEUS")
 
 permissions:
   contents: read
@@ -31,7 +31,7 @@ jobs:
       - name: Install & Build Frontend
         working-directory: ./FRONTEND
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Setup Pages

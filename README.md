@@ -1,3 +1,7 @@
+# Proyecto-cinerama
+
+- `BACKEND/`: aplicación Spring Boot.
+- `FRONTEND/`: aplicación React. Consulta [las instrucciones del frontend](FRONTEND/README.md) para ejecutarla.
 <img width="1362" height="1166" alt="image" src="https://github.com/user-attachments/assets/d585a43f-7ecf-4243-a184-3a6934243d81" /># Proyecto-cinerama - Web Application
 
 Sistema web completo para una cadena de cines que permite a los usuarios explorar la cartelera de películas, consultar sedes, filtrar funciones por ciudad y fecha, y realizar la reserva e interactuar con el mapa interactivo de asientos en tiempo real.

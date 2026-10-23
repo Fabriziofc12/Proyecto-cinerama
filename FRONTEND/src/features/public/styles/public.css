@@ -1,0 +1,10 @@
+/* Orden de cascada: base, páginas, interacciones y adaptaciones. */
+@import './foundation.css';
+@import './home.css';
+@import './catalog.css';
+@import './booking.css';
+@import './auth.css';
+@import './footer.css';
+@import './interactions.css';
+@import './responsive.css';
+@import './motion.css';

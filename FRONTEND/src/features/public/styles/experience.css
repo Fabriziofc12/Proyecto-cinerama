@@ -1,0 +1,487 @@
+/* Fotografías y contexto de la sede */
+.pub-location-preview {
+  position: relative;
+  display: block;
+  min-height: 260px;
+  width: 42%;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pub-location-preview > img,
+.pub-location-preview > .pub-image-fallback {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+.pub-location-preview > span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 52px 22px 22px;
+  background: linear-gradient(transparent, #08090be8);
+  font-weight: 650;
+}
+.pub-location-preview svg {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.pub-location-preview small {
+  display: block;
+  margin: 5px 0 0 27px;
+  color: #ddd;
+  font-weight: 400;
+}
+.pub-cinema-info {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 26px;
+  margin-top: 32px;
+}
+.pub-location-card,
+.pub-cinema-facts {
+  padding: 28px;
+  border: 1px solid var(--pub-line);
+  border-radius: 14px;
+}
+.pub-location-card {
+  background: radial-gradient(ellipse at top right, #64513b30, transparent 65%), var(--pub-panel);
+}
+.pub-cinema-info h2 {
+  font-size: 1.3rem;
+  margin-bottom: 18px;
+}
+.pub-location-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.pub-location-card address {
+  color: var(--pub-muted);
+  font-style: normal;
+  margin-bottom: 24px;
+}
+.pub-location-card small {
+  display: block;
+  margin-top: 16px;
+}
+.pub-cinema-fact {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 17px;
+}
+.pub-cinema-fact svg {
+  color: var(--pub-gold);
+  flex-shrink: 0;
+}
+.pub-cinema-fact span {
+  display: block;
+  color: var(--pub-muted);
+  font-size: 0.8rem;
+}
+.pub-cinema-facts p {
+  color: var(--pub-muted);
+  font-size: 0.8rem;
+  margin: 20px 0 12px;
+}
+.pub-program-heading {
+  margin-top: 55px;
+}
+
+/* Vista previa del tráiler antes de cargar el reproductor externo */
+.pub-trailer-player {
+  margin-top: 22px;
+  aspect-ratio: 16/9;
+  background: #0d0e12;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.pub-trailer-player iframe {
+  display: block;
+  height: 100%;
+  margin: 0;
+}
+.pub-trailer-preview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 0;
+  color: white;
+  background: radial-gradient(ellipse, #573637, #17191e);
+}
+.pub-trailer-preview > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+.pub-trailer-preview > span {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 18px;
+  text-shadow: 0 2px 10px #000;
+}
+.pub-trailer-preview svg {
+  background: var(--pub-red);
+  box-sizing: content-box;
+  padding: 17px;
+  border-radius: 50%;
+}
+.pub-trailer-preview small {
+  color: #fff;
+}
+
+/* Mapa completo y ampliación para objetivos táctiles más grandes */
+.pub-map-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  color: var(--pub-muted);
+  font-size: 0.75rem;
+}
+.pub-map-zoom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid var(--pub-line);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--pub-gold);
+  background: var(--pub-panel);
+  font-size: 0.75rem !important;
+}
+.pub-seat-map.is-overview .pub-seats {
+  width: min(100%, 520px);
+  gap: 8px;
+}
+.pub-seat-map.is-overview .pub-seat-row {
+  --row-label-width: 12px;
+  display: grid;
+  grid-template-columns: var(--seat-tracks);
+  gap: 4px;
+}
+.pub-seat-map.is-overview .pub-seat {
+  width: 100%;
+  min-width: 0;
+  height: 36px;
+}
+.pub-seat-gap {
+  width: 8px;
+  flex-shrink: 0;
+}
+.pub-seat-map.is-expanded .pub-seat {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  font-size: 0.78rem !important;
+}
+.pub-seat-map.is-expanded .pub-seat-row {
+  gap: 7px;
+}
+.pub-seat-map .pub-seat-help {
+  display: block;
+  color: var(--pub-muted);
+  text-align: center;
+  margin-bottom: 8px !important;
+}
+.pub-seat-map .pub-seat:focus-visible {
+  outline-offset: 1px;
+}
+.pub-receipt-help {
+  max-width: 610px;
+  font-size: 0.8rem;
+  margin: 25px auto 0 !important;
+  color: var(--pub-muted);
+}
+.pub-receipt-help .pub-text-link {
+  display: inline;
+  font-size: inherit;
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .pub-cinema-info {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pub-location-preview {
+    width: 100%;
+    min-height: 230px;
+  }
+  .pub-visit-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+@media (max-width: 540px) {
+  .pub-hero-backdrop img {
+    object-position: 65% center;
+  }
+  .pub-hero-glow {
+    background: linear-gradient(0deg, #111214 3%, #111214b5 60%, #11121444);
+  }
+  .pub-location-card,
+  .pub-cinema-facts {
+    padding: 22px;
+  }
+  .pub-seat-map.is-overview .pub-seat-row {
+    --row-label-width: 8px;
+    gap: 3px;
+  }
+  .pub-seat-map.is-overview .pub-seat {
+    height: 32px;
+    border-radius: 5px 5px 3px 3px;
+    font-size: 0.61rem !important;
+  }
+  .pub-seat-map.is-overview .pub-row-label {
+    width: 8px;
+  }
+  .pub-map-toolbar {
+    flex-wrap: wrap;
+  }
+  .pub-map-zoom {
+    padding: 8px 10px;
+  }
+}
+
+.pub-active-filters,
+.pub-selected-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pub-active-filters {
+  margin-top: 20px;
+}
+.pub-selected-chips {
+  margin-top: 12px;
+}
+.pub-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  max-width: 100%;
+  padding: 7px 11px;
+  border-radius: 7px;
+  border: 1px solid var(--pub-line);
+  color: var(--pub-gold);
+  background: var(--pub-panel);
+  font-size: 0.76rem !important;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.pub-filter-chip svg {
+  flex-shrink: 0;
+}
+.pub-filter-chip:hover {
+  border-color: var(--pub-gold);
+}
+.pub-booking-main {
+  scroll-margin-top: 24px;
+}
+.pub-selection-summary {
+  min-width: 0;
+}
+.pub-selection-summary p {
+  color: var(--pub-text);
+  font-weight: 600;
+}
+.pub-selected-chips .pub-filter-chip {
+  min-height: 44px;
+}
+
+/* Imprime únicamente la reserva, sin navegación ni controles. */
+@media print {
+  body:has(.pub-receipt) {
+    background: white;
+  }
+  body:has(.pub-receipt) .pub-site {
+    height: auto;
+    overflow: visible;
+    background: white;
+    color: #222;
+  }
+  body:has(.pub-receipt) .pub-site > :not(main) {
+    display: none;
+  }
+  .pub-receipt {
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    max-width: none;
+  }
+  .pub-receipt .pub-actions,
+  .pub-receipt .pub-receipt-help,
+  .pub-receipt .pub-success-icon {
+    display: none;
+  }
+  .pub-site .pub-receipt h1,
+  .pub-site .pub-receipt h2,
+  .pub-site .pub-receipt p,
+  .pub-site .pub-receipt small,
+  .pub-site .pub-receipt .pub-eyebrow {
+    color: #222;
+  }
+  .pub-receipt .pub-ticket {
+    background: white;
+    color: #222;
+    border: 1px solid #aaa;
+    break-inside: avoid;
+  }
+  .pub-receipt .pub-ticket-code {
+    color: #222;
+  }
+}
+
+/* Ajustes compartidos de navegación, accesibilidad e impresión. */
+.pub-announcement {
+  text-align: center;
+  padding: 10px 16px;
+  white-space: normal;
+}
+.pub-site [id] {
+  scroll-margin-top: 120px;
+}
+.pub-hero h1 {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--pub-text);
+}
+.pub-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.pub-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.pub-steps li {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.pub-steps li span {
+  flex-shrink: 0;
+}
+.pub-receipt-progress {
+  padding-bottom: 0;
+}
+.pub-auth-form-extras {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.pub-remember-me,
+.pub-forgot-pwd {
+  min-height: 44px;
+}
+@media (max-width: 540px) {
+  .pub-steps li {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.75rem;
+  }
+  .pub-site [id] {
+    scroll-margin-top: 100px;
+  }
+}
+@media print {
+  html:has(.pub-receipt),
+  body:has(.pub-receipt),
+  body:has(.pub-receipt) #root {
+    height: auto;
+    overflow: visible;
+  }
+  .pub-receipt-progress {
+    display: none;
+  }
+}
+.pub-auth-story,
+.pub-auth-card,
+.pub-auth-story-content,
+.pub-float-field {
+  min-width: 0;
+}
+.pub-auth-story-lead,
+.pub-auth-card-heading {
+  overflow-wrap: anywhere;
+}
+.pub-auth-fieldset input {
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .pub-auth-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 540px) {
+  .pub-auth-card,
+  .pub-auth-story {
+    padding: 24px 20px;
+  }
+  .pub-auth-switcher {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pub-switcher-btn {
+    padding: 12px 6px;
+    white-space: normal;
+  }
+  .pub-quick-demo-chips {
+    flex-wrap: wrap;
+  }
+  .pub-auth-card-heading h2 {
+    font-size: 1.4rem;
+  }
+}
+.pub-ticket-reference {
+  display: block;
+  margin: 8px 0 20px;
+  color: var(--pub-muted);
+  overflow-wrap: anywhere;
+}
+.pub-ticket-qr {
+  margin: 24px auto;
+  text-align: center;
+  break-inside: avoid;
+}
+.pub-ticket-qr img {
+  display: block;
+  width: min(100%, 280px);
+  height: auto;
+  margin: 0 auto 12px;
+  background: white;
+}
+.pub-ticket-qr figcaption {
+  font-size: 0.8rem;
+  color: var(--pub-muted);
+}
+@media print {
+  .pub-ticket-qr figcaption,
+  .pub-ticket-reference {
+    color: #444;
+  }
+}
+.pub-ticket .pub-ticket-reference,
+.pub-ticket .pub-ticket-qr figcaption {
+  color: #686058;
+}

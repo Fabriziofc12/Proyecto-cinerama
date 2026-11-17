@@ -2,6 +2,14 @@
 
 Sistema web completo para una cadena de cines que permite a los usuarios explorar la cartelera de películas, consultar sedes, filtrar funciones por ciudad y fecha, y realizar la reserva e interactuar con el mapa interactivo de asientos en tiempo real.
 
+link github Pages: https://fabriziofc12.github.io/Proyecto-cinerama/
+
+Cambios en el segundo avance:
+- Generacion de las vistas WebHome, /web/peliculas, /web/cines, /web/cuenta, /web/login
+- Correccion de errores y pruebas.
+- Rectificacion de la documentacion
+- Planificacion de tareas usando la metodologia scrum a traves de un tablero kanban.
+
 ---
 
 ## 🚀 características Principales

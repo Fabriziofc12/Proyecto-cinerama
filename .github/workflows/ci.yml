@@ -28,7 +28,7 @@ jobs:
 
     # 4. Compila la aplicación para verificar que no existan errores de sintaxis (Build)
     - name: Compilar proyecto (Build)
-      run: npm run comando-falso
+      run: npm run build --if-present
 
     # 5. Ejecuta las pruebas automáticas configuradas en el proyecto (Test)
     - name: Ejecutar pruebas automatizadas

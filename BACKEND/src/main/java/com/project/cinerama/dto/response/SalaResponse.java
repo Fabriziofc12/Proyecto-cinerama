@@ -7,3 +7,4 @@ public record SalaResponse(
     Integer cineId,
     String cineNombre
 ) {}
+// cambio de nombre de variable cineId a cineNombre para que sea más descriptivo y consistente con el resto del código.

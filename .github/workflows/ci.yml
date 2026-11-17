@@ -3,9 +3,9 @@ name: Cinerama CI Pipeline
 # Define cuándo se ejecutará automáticamente este flujo
 on:
   push:
-    branches: [ main, develop ]  # Se dispara en cada push hacia la rama principal
+    branches: [ main, master ]  # Se dispara en cada push hacia la rama principal
   pull_request:
-    branches: [ main, develop ]  # Se dispara en cada pull request hacia la rama principal
+    branches: [ main, master ]  # Se dispara en cada pull request hacia la rama principal
 
 jobs:
   build-and-test:
@@ -33,3 +33,5 @@ jobs:
     # 5. Ejecuta las pruebas automáticas configuradas en el proyecto (Test)
     - name: Ejecutar pruebas automatizadas
       run: npm test
+
+#pruebas 

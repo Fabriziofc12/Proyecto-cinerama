@@ -2,7 +2,7 @@ name: Deploy Frontend to GitHub Pages
 
 on:
   push:
-    branches: [ "MATHEUS" ] # 👈 Cambia esto a la rama exacta que usas (ej. "develop", "main", "MATHEUS")
+    branches: [ "MATHEUS", "main"] # 👈 Cambia esto a la rama exacta que usas (ej. "develop", "main", "MATHEUS")
 
 permissions:
   contents: read

@@ -7,3 +7,4 @@ public record CineResponse(
     String urlImagen,
     String ciudadNombre
 ) {}
+// cambio 

@@ -1,5 +1,6 @@
 import { readStorage, writeStorage } from './storage.js';
 import { hasStarted } from '../utils/format.js';
+import { bookingTotal } from '../utils/pricing.js';
 import { validCardFormat } from '../utils/validation.js';
 
 export function occupiedSeats(show, orders = readStorage('orders', [])) {
@@ -23,6 +24,7 @@ export async function purchase({ show, seats, customer, card, movie, cinema }) {
   if (!validCardFormat(card)) {
     throw new Error('Escribe un número de entre 13 y 19 dígitos.');
   }
+  validateSeats(show, seats, readStorage('orders', []));
   await new Promise((resolve) => setTimeout(resolve, 900));
   const commit = () => {
     const orders = readStorage('orders', []);
@@ -44,7 +46,7 @@ export async function purchase({ show, seats, customer, card, movie, cinema }) {
       movieTitle: movie.title,
       poster: movie.poster,
       cinemaName: cinema.name,
-      total: seats.length * show.price,
+      total: bookingTotal(show.price, seats),
       createdAt: new Date().toISOString(),
     };
     writeStorage('orders', [order, ...orders]);

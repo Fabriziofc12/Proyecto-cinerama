@@ -1,7 +1,8 @@
 import test, { beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { filterShows, movies, cinemas, shows } from '../src/features/public/data/catalog.js';
-import { localDate, nextDays } from '../src/features/public/utils/format.js';
+import { hasStarted, localDate, nextDays } from '../src/features/public/utils/format.js';
+import { bookingTotal, ticketPriceForDate } from '../src/features/public/utils/pricing.js';
 import { validatePayment, validateRegistration } from '../src/features/public/utils/validation.js';
 import {
   occupiedSeats,
@@ -60,6 +61,47 @@ test('preventa y próximos estrenos no se mezclan con la cartelera', () => {
   assert.ok(filterShows({ movieId: 4, date: nextDays()[2] }).length > 0);
   assert.equal(filterShows({ movieId: 7 }).length, 0);
   assert.equal(filterShows({ movieId: 8 }).length, 0);
+});
+
+test('el precio aplica la tarifa por día, feriados, días no laborables y preestrenos', () => {
+  assert.equal(ticketPriceForDate('2026-11-16'), 13);
+  assert.equal(ticketPriceForDate('2026-11-17'), 12);
+  assert.equal(ticketPriceForDate('2026-11-18'), 13);
+  assert.equal(ticketPriceForDate('2026-11-19'), 19);
+  assert.equal(ticketPriceForDate('2026-04-02'), 19);
+  assert.equal(ticketPriceForDate('2026-12-08'), 19);
+  assert.equal(ticketPriceForDate('2026-11-16', { nonWorkingDates: new Set(['2026-11-16']) }), 19);
+  assert.equal(ticketPriceForDate('2026-11-16', { preRelease: true }), 19);
+  assert.ok(shows.filter((show) => show.movieId === 4).every((show) => show.price === 19));
+  assert.throws(() => ticketPriceForDate('2026-02-30'), /Fecha inválida/);
+});
+
+test('el total se recalcula a partir de las butacas que siguen seleccionadas', () => {
+  const selected = ['A1', 'A2', 'A3'];
+  assert.equal(bookingTotal(13, selected), 39);
+  assert.equal(
+    bookingTotal(
+      13,
+      selected.filter((seat) => seat !== 'A2'),
+    ),
+    26,
+  );
+});
+
+test('una compra sin butacas no crea una reserva vacía', async () => {
+  await assert.rejects(purchase(booking([])), /Selecciona entre 1 y 8 butacas/);
+  assert.equal(readStorage('orders', []).length, 0);
+});
+
+test('una butaca ocupada por una compra anterior no se puede volver a reservar', () => {
+  const previousOrder = { show: { id: future.id }, seats: ['E4'] };
+  assert.throws(() => validateSeats(future, ['E4'], [previousOrder]), /disponible/);
+});
+
+test('una función se considera iniciada justo a la hora de inicio', () => {
+  const show = { date: '2026-11-17', time: '15:30' };
+  assert.equal(hasStarted(show, new Date(2026, 10, 17, 15, 29, 59)), false);
+  assert.equal(hasStarted(show, new Date(2026, 10, 17, 15, 30)), true);
 });
 
 test('no se reservan butacas ocupadas, inexistentes, repetidas ni más de ocho', () => {

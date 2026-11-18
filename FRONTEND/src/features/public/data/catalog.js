@@ -1,5 +1,6 @@
 import { movies as sourceMovies, branches as sourceBranches } from '../../../data/store.js';
 import { nextDays } from '../utils/format.js';
+import { ticketPriceForDate } from '../utils/pricing.js';
 import { movieDetails } from './movieDetails.js';
 
 // Fixtures del sitio público. Sus fechas son relativas para poder presentar la demo cualquier día.
@@ -28,7 +29,7 @@ export const shows = dates.flatMap((date, day) =>
         hall: `Sala ${1 + (movie.id % cinema.halls)}`,
         format: movie.format[index % movie.format.length],
         language: movie.language,
-        price: 15 + ((cinema.id + index) % 3) * 3,
+        price: ticketPriceForDate(date, { preRelease: movie.status === 'presale' }),
         rows: 8,
         columns: 10,
         occupied:

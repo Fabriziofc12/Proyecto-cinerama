@@ -35,6 +35,12 @@ test('el comprobante descargable conserva los datos y escapa HTML ingresado por 
   assert.match(receiptText(order), /Total simulado: S\/\s*42[.,]00/);
 });
 
+test('el comprobante presenta una sola butaca sin separadores sobrantes', () => {
+  const singleSeatOrder = { ...order, seats: ['B7'] };
+  assert.match(receiptText(singleSeatOrder), /Butacas: B7/);
+  assert.ok(receiptHtml(singleSeatOrder).includes('<dd>B7</dd>'));
+});
+
 test('los enlaces a Maps incluyen sede, dirección y ciudad sin perder caracteres especiales', () => {
   const cinema = { name: 'Cinerama & Sol', address: 'Av. San Martín 727', city: 'Ica' };
   const links = cinemaMapLinks(cinema);

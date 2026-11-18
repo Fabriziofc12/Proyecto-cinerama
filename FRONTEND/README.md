@@ -31,13 +31,10 @@ npm run format:check
 
 ## Alcance de esta entrega
 
-Página de inicio con carrusel de tres películas, avance manual y automático, pausa y gesto táctil. Incluye catálogo por categorías, búsqueda por título sin distinguir tildes, estados vacíos, imágenes alternativas y menú móvil. La navegación apunta a secciones de esta misma página. Las animaciones respetan la preferencia de movimiento reducido.
+El sitio público incluye cartelera, selección de función y butacas, compra de demostración y comprobante local. No realiza cobros ni está conectado con el backend; los horarios, la disponibilidad y las reservas son datos de demostración.
 
-Los datos están en `src/features/public/data/catalog.js`, los controles visuales en `components` y los hooks del carrusel y las animaciones en `hooks`. Las imágenes usan los enlaces del prototipo original y dependen de conexión a internet.
+La tarifa de demostración es S/ 12 los martes, S/ 13 los lunes y miércoles, y S/ 19 de jueves a domingo. También es S/ 19 en preestrenos y feriados nacionales peruanos. Las fechas no laborables decretadas por la PCM se mantienen en `src/features/public/utils/pricing.js` y deben actualizarse cuando se publiquen; consulta el calendario oficial en <https://www.gob.pe/feriados>.
 
-Todavía no se incluyen las páginas de detalle, sedes, compra, usuarios ni el panel administrativo. Tampoco se conecta con el backend. Esas funcionalidades se integrarán en entregas posteriores; el catálogo no representa disponibilidad comercial real.
-
-Para revisar la portada: alternar las tres categorías, buscar un título con y sin tildes, probar un título inexistente, cambiar y pausar el carrusel, abrir el menú en móvil y navegar a una ruta inexistente para volver al inicio.
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

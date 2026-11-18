@@ -1,5 +1,6 @@
 import Poster from './Poster';
 import { dateLabel, money, languageLabel } from '../utils/format';
+import { bookingTotal } from '../utils/pricing';
 
 export default function BookingSummary({ movie, cinema, show, selected }) {
   return (
@@ -45,7 +46,7 @@ export default function BookingSummary({ movie, cinema, show, selected }) {
       </dl>
       <div className="pub-total">
         <span>Total</span>
-        <strong>{money(show.price * selected.length)}</strong>
+        <strong>{money(bookingTotal(show.price, selected))}</strong>
       </div>
       <small>Precio final por las entradas seleccionadas.</small>
     </aside>

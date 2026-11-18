@@ -1,12 +1,13 @@
 import { X } from 'lucide-react';
 import { money } from '../utils/format';
+import { bookingTotal } from '../utils/pricing';
 
 export default function SeatSelectionSummary({ selected, price, onRemove }) {
   return (
     <div className="pub-selection-summary">
       <p role="status">
         {selected.length
-          ? `${selected.length} ${selected.length === 1 ? 'butaca seleccionada' : 'butacas seleccionadas'} · ${money(price * selected.length)}`
+          ? `${selected.length} ${selected.length === 1 ? 'butaca seleccionada' : 'butacas seleccionadas'} · ${money(bookingTotal(price, selected))}`
           : 'Selecciona una butaca para continuar.'}
       </p>
       {!!selected.length && (

@@ -6,6 +6,7 @@ import { cinemas, movies, shows } from '../data/catalog';
 import { usePublic } from '../context/PublicContext';
 import { occupiedSeats, purchase, validateSeats } from '../services/demoBooking';
 import { readStorage, writeStorage } from '../services/storage';
+import { bookingTotal } from '../utils/pricing';
 import { hasStarted } from '../utils/format';
 import SeatMap from '../components/SeatMap';
 import BookingSummary from '../components/BookingSummary';
@@ -142,7 +143,7 @@ function BookingFlow({ show }) {
           ) : (
             <PaymentForm
               user={user}
-              total={show.price * selected.length}
+              total={bookingTotal(show.price, selected)}
               onPay={pay}
               onBack={() => {
                 setStep(1);

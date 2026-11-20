@@ -363,10 +363,7 @@ export default function AuthPage() {
 
                 <div className="pub-pwd-chips" aria-label="Requisitos de contraseña">
                   {passwordCriteria.map((item) => (
-                    <span
-                      key={item.id}
-                      className={`pub-pwd-chip ${item.met ? 'is-met' : ''}`}
-                    >
+                    <span key={item.id} className={`pub-pwd-chip ${item.met ? 'is-met' : ''}`}>
                       {item.met && <Check size={12} strokeWidth={2.5} />}
                       {item.label}
                     </span>

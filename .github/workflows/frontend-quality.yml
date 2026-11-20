@@ -2,10 +2,10 @@ name: Frontend Quality Check
 
 on:
   push:
-    branches: [main, master]
+    branches: [ANTHONY]
   pull_request:
-    branches: [main, master]
-
+    branches: [ANTHONY]
+  workflow_dispatch:
 jobs:
   quality-check:
     name: Validar estilo y calidad

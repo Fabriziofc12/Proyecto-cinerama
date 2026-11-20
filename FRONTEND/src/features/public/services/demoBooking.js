@@ -53,5 +53,7 @@ export async function purchase({ show, seats, customer, card, movie, cinema }) {
     return order;
   };
   // Evita compras simultáneas de la misma butaca en pestañas de este navegador.
-  return navigator.locks ? navigator.locks.request('cinerama-demo-purchase', commit) : commit();
+  return typeof window !== 'undefined' && navigator.locks
+    ? navigator.locks.request('cinerama-demo-purchase', commit)
+    : commit();
 }

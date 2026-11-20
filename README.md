@@ -1,8 +1,20 @@
 # Proyecto-cinerama
 
+[![CI: build y pruebas](https://github.com/Fabriziofc12/Proyecto-cinerama/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/Fabriziofc12/Proyecto-cinerama/actions/workflows/ci.yml)
+[![Calidad del frontend](https://github.com/Fabriziofc12/Proyecto-cinerama/actions/workflows/frontend-quality.yml/badge.svg?branch=develop)](https://github.com/Fabriziofc12/Proyecto-cinerama/actions/workflows/frontend-quality.yml)
+
 - `BACKEND/`: aplicación Spring Boot.
 - `FRONTEND/`: aplicación React. Consulta [las instrucciones del frontend](FRONTEND/README.md) para ejecutarla.
-<img width="1362" height="1166" alt="image" src="https://github.com/user-attachments/assets/d585a43f-7ecf-4243-a184-3a6934243d81" /># Proyecto-cinerama - Web Application
+
+## Avance v0.3.0
+
+- Se actualizó el cálculo de tarifas de demostración según el día, los feriados y los preestrenos.
+- Se reforzaron las validaciones de selección y reserva de butacas, y se muestran los códigos de asiento en el comprobante.
+- Se incorporaron workflows de GitHub Actions para ejecutar build y pruebas, además de ESLint y la comprobación de formato del frontend.
+
+<img width="1362" height="1166" alt="image" src="https://github.com/user-attachments/assets/d585a43f-7ecf-4243-a184-3a6934243d81" />
+
+# Proyecto-cinerama - Web Application
 
 Sistema web completo para una cadena de cines que permite a los usuarios explorar la cartelera de películas, consultar sedes, filtrar funciones por ciudad y fecha, y realizar la reserva e interactuar con el mapa interactivo de asientos en tiempo real.
 

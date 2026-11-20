@@ -2,9 +2,9 @@ name: Frontend Quality Check
 
 on:
   push:
-    branches: [ANTHONY]
+    branches: ['**']
   pull_request:
-    branches: [ANTHONY]
+    branches: [main, master, develop]
   workflow_dispatch:
 jobs:
   quality-check:
@@ -22,7 +22,7 @@ jobs:
 
       - name: Instalar dependencias
         working-directory: ./FRONTEND
-        run: npm install
+        run: npm ci
 
       - name: Ejecutar ESLint
         working-directory: ./FRONTEND

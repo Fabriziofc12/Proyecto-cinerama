@@ -5,7 +5,7 @@ on:
     branches: ['**']
   pull_request:
     branches: [main, master, develop]
-
+  workflow_dispatch:
 jobs:
   quality-check:
     name: Validar estilo y calidad

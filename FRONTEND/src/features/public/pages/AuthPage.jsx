@@ -1,5 +1,8 @@
+// Hook de React utilizado para administrar el estado local del formulario.
 import { useState } from 'react';
+// Componentes y hooks de React Router para redirecciones y parámetros de URL.
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+// Iconos visuales utilizados en los campos y botones de autenticación.
 import {
   ArrowRight,
   Check,
@@ -14,30 +17,46 @@ import {
   Ticket,
   User,
 } from 'lucide-react';
+// Contexto público: proporciona el usuario actual y la función para iniciar sesión.
 import { usePublic } from '../context/PublicContext';
+// Servicios de autenticación demo y credenciales rápidas para las pruebas.
 import { adminCredentials, demoCredentials, login, register } from '../services/demoAuth';
+// Validación de los datos introducidos durante el registro.
 import { validateRegistration } from '../utils/validation';
 
+// Página de inicio de sesión y registro de usuarios.
 export default function AuthPage() {
+  // Obtiene el usuario actual y la función que guarda la sesión autenticada.
   const { user, signIn } = usePublic();
+  // Permite navegar programáticamente después de autenticar al usuario.
   const navigate = useNavigate();
+  // Lee el parámetro "next" para regresar al usuario a la ruta solicitada.
   const [params] = useSearchParams();
+  // Define si se muestra el formulario de inicio de sesión o de registro.
   const [mode, setMode] = useState('login');
+  // Controla si la contraseña se muestra como texto o se oculta.
   const [visible, setVisible] = useState(false);
+  // Evita envíos repetidos mientras se procesa la autenticación.
   const [busy, setBusy] = useState(false);
+  // Guarda el mensaje de error que se presenta al usuario.
   const [error, setError] = useState('');
+  // Guarda avisos informativos, como las credenciales demo cargadas.
   const [notice, setNotice] = useState('');
+  // Indica si la sesión debe conservarse en el navegador.
   const [rememberMe, setRememberMe] = useState(true);
+  // Agrupa todos los valores de los campos del formulario.
   const [fields, setFields] = useState({ name: '', email: '', password: '', confirm: '' });
 
+  // Redirige a los usuarios que ya tienen una sesión activa.
   if (user) return <Navigate to={user.role === 'admin' ? '/dashboard' : '/web/cuenta'} replace />;
 
+  // Actualiza un campo del formulario y limpia el error anterior.
   const update = (key, value) => {
     setError('');
     setFields((previous) => ({ ...previous, [key]: value }));
   };
 
-  // Simple consumer password evaluation (8+ chars, number, casing)
+  // Define los criterios visuales utilizados para medir la seguridad de la contraseña.
   const passwordCriteria = [
     {
       id: 'length',
@@ -56,10 +75,14 @@ export default function AuthPage() {
     },
   ];
 
+  // Calcula el porcentaje, etiqueta y nivel de seguridad de una contraseña.
   function getPasswordStatus(pwd, criteria) {
+    // Una contraseña vacía no muestra progreso ni mensaje.
     if (!pwd) return { percent: 0, label: '', level: 'empty' };
+    // Cuenta cuántos criterios de seguridad se cumplen.
     const metCount = criteria.filter((c) => c.met).length;
 
+    // Menos de ocho caracteres se considera una contraseña débil.
     if (pwd.length < 8) {
       return {
         percent: 25,
@@ -67,6 +90,7 @@ export default function AuthPage() {
         level: 'weak',
       };
     }
+    // Una sola regla adicional cumplida representa un avance inicial.
     if (metCount === 1) {
       return {
         percent: 50,
@@ -74,6 +98,7 @@ export default function AuthPage() {
         level: 'fair',
       };
     }
+    // Dos reglas cumplidas representan una contraseña de nivel bueno.
     if (metCount === 2) {
       return {
         percent: 75,
@@ -81,6 +106,7 @@ export default function AuthPage() {
         level: 'good',
       };
     }
+    // Si llega aquí, se cumplen todos los criterios definidos.
     return {
       percent: 100,
       label: 'Lista para usar',
@@ -88,28 +114,39 @@ export default function AuthPage() {
     };
   }
 
+  // Obtiene el estado actual para dibujar la barra de seguridad.
   const pwdStatus = getPasswordStatus(fields.password, passwordCriteria);
 
+  // Procesa el inicio de sesión o el registro cuando se envía el formulario.
   async function submit(event) {
+    // Evita que el navegador recargue la página al enviar el formulario.
     if (event) event.preventDefault();
+    // Ignora nuevos envíos mientras existe una solicitud en curso.
     if (busy) return;
+    // Selecciona la validación correspondiente al modo actual.
     const validation =
       mode === 'register'
         ? validateRegistration(fields)
         : !fields.email || !fields.password
           ? 'Completa tu correo y contraseña.'
           : '';
+    // Si la validación falla, muestra el motivo y detiene el envío.
     if (validation) {
       setError(validation);
       return;
     }
+    // Desactiva temporalmente los controles durante la solicitud.
     setBusy(true);
     setError('');
     try {
+      // Ejecuta el servicio de registro o de inicio de sesión seleccionado.
       const session =
         mode === 'register' ? await register(fields) : await login(fields.email, fields.password);
+      // Guarda la sesión según la preferencia de persistencia del usuario.
       signIn(session, rememberMe);
+      // Recupera la ruta original solicitada, si existe.
       const target = params.get('next');
+      // Envía al usuario al dashboard, a la ruta válida o a su cuenta.
       navigate(
         session.role === 'admin'
           ? '/dashboard'
@@ -119,13 +156,15 @@ export default function AuthPage() {
         { replace: true },
       );
     } catch (failure) {
+      // Convierte el error del servicio en un mensaje visible.
       setError(failure.message || 'No pudimos iniciar la sesión. Inténtalo de nuevo.');
     } finally {
+      // Reactiva los controles cuando la solicitud termina.
       setBusy(false);
     }
   }
 
-  // Quick 1-click test filler
+  // Carga en un clic las credenciales de una cuenta demo para probar el flujo.
   function fillDemo(creds, label) {
     setMode('login');
     setFields((prev) => ({ ...prev, ...creds }));
@@ -133,9 +172,10 @@ export default function AuthPage() {
     setNotice(`Credenciales de ${label} cargadas. Haz clic en "Iniciar sesión".`);
   }
 
+  // Renderiza la composición visual completa de la página de autenticación.
   return (
     <section className="pub-auth-page">
-      {/* ── Left Cinematic Story / Benefits Panel ── */}
+      {/* Panel izquierdo: historia cinematográfica y beneficios de la cuenta. */}
       <div className="pub-auth-story">
         <div className="pub-auth-ambient-glow" aria-hidden="true" />
 
@@ -189,9 +229,9 @@ export default function AuthPage() {
         </div>
       </div>
 
-      {/* ── Right Interactive Form Panel ── */}
+      {/* Panel derecho: formulario interactivo de autenticación. */}
       <div className="pub-auth-card">
-        {/* Segmented Switcher */}
+        {/* Selector entre los modos de inicio de sesión y registro. */}
         <div className="pub-auth-switcher" role="group" aria-label="Seleccionar modo de acceso">
           <button
             type="button"
@@ -230,7 +270,7 @@ export default function AuthPage() {
           </p>
         </div>
 
-        {/* 1-Click Fast Demo Testing Access */}
+        {/* Accesos rápidos para probar cuentas demo sin escribir credenciales. */}
         <div className="pub-quick-demo-banner">
           <div className="pub-quick-demo-header">
             <span className="pub-quick-demo-title">
@@ -261,7 +301,7 @@ export default function AuthPage() {
           </div>
         </div>
 
-        {/* Notices and Errors */}
+        {/* Avisos informativos y mensajes de error del formulario. */}
         {notice && (
           <div className="pub-auth-notice" role="status">
             <Check size={16} /> {notice}
@@ -273,7 +313,7 @@ export default function AuthPage() {
           </div>
         )}
 
-        {/* Main Form */}
+        {/* Formulario principal de inicio de sesión o creación de cuenta. */}
         <form onSubmit={submit} noValidate aria-busy={busy}>
           <fieldset disabled={busy} className="pub-auth-fieldset">
             {mode === 'register' && (
@@ -339,7 +379,7 @@ export default function AuthPage() {
               </div>
             </div>
 
-            {/* Simple Consumer Password Feedback */}
+            {/* Indicador visual de seguridad de la contraseña durante el registro. */}
             {mode === 'register' && fields.password && (
               <div className="pub-pwd-guide" aria-live="polite">
                 <div className="pub-pwd-bar-row">
@@ -393,7 +433,7 @@ export default function AuthPage() {
             )}
           </fieldset>
 
-          {/* Remember me & Forgot password */}
+          {/* Preferencia de persistencia y ayuda para recuperar el acceso. */}
           {
             <div className="pub-auth-form-extras">
               <label className="pub-remember-me">
@@ -434,7 +474,7 @@ export default function AuthPage() {
           </button>
         </form>
 
-        {/* Security / Guarantee Footer */}
+        {/* Nota final sobre el carácter local y demostrativo de la autenticación. */}
         <div className="pub-auth-security-footer">
           <ShieldCheck size={16} />
           <span>
